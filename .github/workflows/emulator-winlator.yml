@@ -19,6 +19,11 @@ jobs:
         # Download the APK file
         curl -L -o apks/emulator/winlator/winlator.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
 
+    - name: Download Image
+      run: |
+        # Download image from the internet
+        curl -L -o apks/emulator/winlator/winlator-image.jpg "https://raw.githubusercontent.com/brunodev85/winlator/refs/heads/main/app/src/main/res/drawable-hdpi/logo.png"
+
     - name: Create Release
       id: create_release
       uses: actions/create-release@v1
@@ -39,3 +44,22 @@ jobs:
         asset_content_type: application/vnd.android.package-archive
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Image to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: apks/emulator/winlator/winlator-image.jpg
+        asset_name: winlator-image.jpg
+        asset_content_type: image/jpeg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update Release Description with Image
+      run: |
+        # Update release description with image link
+        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/winlator-9.0/winlator-image.jpg"
+        curl -X PATCH \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d "{\"body\": \"Winlator 9.0 release. See the image below: ![$IMAGE_URL]($IMAGE_URL)\"}" \
+          https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}
