@@ -1,0 +1,20 @@
+name: Winlator
+
+on:
+  workflow_dispatch: # Trigger only manually
+
+jobs:
+  download-apk:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@v3
+
+    - name: Download APK File
+      run: |
+        # Create necessary folders
+        mkdir -p apks/emulator/winlator
+
+        # Download the APK file
+        curl -L -o apks/emulator/winlator/ "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
