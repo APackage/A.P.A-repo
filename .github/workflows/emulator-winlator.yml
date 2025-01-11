@@ -17,4 +17,4 @@ jobs:
         mkdir -p apks/emulator/winlator
 
         # Download the APK file
-        curl -L -o apks/emulator/winlator/ "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
+        curl -L -o apks/emulator/winlator/Winlator_9.0.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
