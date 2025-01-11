@@ -1,10 +1,10 @@
-name: Winlator
+name: Manual APK Download and Publish
 
 on:
-  workflow_dispatch: # Trigger only manually
+  workflow_dispatch: # Trigger manually only
 
 jobs:
-  download-apk:
+  apk-download-and-release:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,4 +17,25 @@ jobs:
         mkdir -p apks/emulator/winlator
 
         # Download the APK file
-        curl -L -o apks/emulator/winlator/Winlator_9.0.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
+        curl -L -o apks/emulator/winlator/winlator.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: "winlator-9.0" # Adjust if needed
+        release_name: "Winlator 9.0"
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload APK to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: apks/emulator/winlator/winlator.apk
+        asset_name: winlator.apk
+        asset_content_type: application/vnd.android.package-archive
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
