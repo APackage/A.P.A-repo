@@ -1,4 +1,4 @@
-name: Manual APK Download and Publish
+name: Winlator
 
 on:
   workflow_dispatch: # Trigger manually only
