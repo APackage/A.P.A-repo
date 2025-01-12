@@ -8,7 +8,7 @@ apk_versions = [
     ("Universal", f"https://github.com/APackage/A.P.A-repo/releases/download/{APP_NAME}/{APP_NAME}.apk")
 ]
 
-folder_name = os.environ.get("FOLDER_NAME", "apks/file-manager/zarchiver/")
+folder_name = os.environ.get("FOLDER_NAME", "apks/emulator/winlator/")
 index_file_path = os.path.join(folder_name, "index.html")
 index_template_path = os.path.join("index_template")
 
