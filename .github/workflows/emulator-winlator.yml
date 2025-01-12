@@ -62,7 +62,7 @@ jobs:
     - name: Update Release Description with Image
       run: |
         # Update release description with image link
-        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/winlator-9.0/winlator-image.jpg"
+        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/winlator-9.0/${{ env.APP_NAME }}.jpg"
         curl -X PATCH \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -d "{\"body\": \"${{ env.APP_NAME }} release. ![$IMAGE_URL]($IMAGE_URL)\"}" \
