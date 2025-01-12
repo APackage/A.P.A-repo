@@ -14,24 +14,28 @@ jobs:
     - name: Set app name
       run: echo "APP_NAME=Winlator_9.0" >> $GITHUB_ENV
 
+    - name: set folder
+      run: echo "FOLDER_NAME=apks/emulator/winlator/" >> $GITHUB_ENV
+
+
 
     - name: Download APK File
       run: |
         # Create necessary folders
-        mkdir -p apks/emulator/winlator
+        mkdir -p ${{ env.FOLDER_NAME }}
 
         # Download the APK file
-        curl -L -o apks/emulator/winlator/${{ env.APP_NAME }}.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
+        curl -L -o ${{  env.FOLDER_NAME }}${{ env.APP_NAME }}.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
 
     - name: Download Icon
       run: |
         # Download image from the internet
-        curl -L -o apks/emulator/winlator/${{ env.APP_NAME }}.jpeg "https://img.utdstc.com/icon/49d/ef9/49def94f7629f13a7d62815cd7c166ebac0613ce57cf497e99179c01a1c2b5c7:200"
+        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}.jpeg "https://img.utdstc.com/icon/49d/ef9/49def94f7629f13a7d62815cd7c166ebac0613ce57cf497e99179c01a1c2b5c7:200"
 
     - name: Download Images
       run: |
-        curl -L -o apks/emulator/winlator/1.jpeg "https://img.utdstc.com/screen/65d/aab/65daabe69713877879f35f931e7b02fb7e45349621e5a0a82fa10bae9dee68ad:300"
-        curl -L -o apks/emulator/winlator/2.jpeg "https://img.utdstc.com/screen/e3a/5ec/e3a5ec868f77c3b4a662364ecbfd7afb64f8e174c50add69d8b332d6510af8e0:300"
+        curl -L -o ${{ env.FOLDER_NAME }}1.jpeg "https://img.utdstc.com/screen/65d/aab/65daabe69713877879f35f931e7b02fb7e45349621e5a0a82fa10bae9dee68ad:300"
+        curl -L -o ${{ env.FOLDER_NAME }}2.jpeg "https://img.utdstc.com/screen/e3a/5ec/e3a5ec868f77c3b4a662364ecbfd7afb64f8e174c50add69d8b332d6510af8e0:300"
 
     - name: Create Release
       id: create_release
@@ -48,7 +52,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: apks/emulator/winlator/${{ env.APP_NAME }}.apk
+        asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}.apk
         asset_name: ${{ env.APP_NAME }}.apk
         asset_content_type: application/vnd.android.package-archive
       env:
@@ -58,7 +62,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: apks/emulator/winlator/1.jpeg
+        asset_path: ${{ env.FOLDER_NAME }}1.jpeg
         asset_name: 1.jpeg
         asset_content_type: image/jpeg
       env:
@@ -68,7 +72,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: apks/emulator/winlator/2.jpeg
+        asset_path: ${{ env.FOLDER_NAME }}2.jpeg
         asset_name: 2.jpeg
         asset_content_type: image/jpeg
       env:
@@ -78,7 +82,7 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: apks/emulator/winlator/${{ env.APP_NAME }}.jpeg
+        asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}.jpeg
         asset_name: ${{ env.APP_NAME }}.jpeg
         asset_content_type: image/jpeg
       env:
