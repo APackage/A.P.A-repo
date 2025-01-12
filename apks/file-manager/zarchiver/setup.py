@@ -11,7 +11,7 @@ apk_versions = [
 
 folder_name = os.environ.get("FOLDER_NAME", "apks/file-manager/zarchiver/")
 index_file_path = os.path.join(folder_name, "index.html")
-index_template_path = os.path.join(folder_name, "index_template")
+index_template_path = os.path.join("index_template")
 
 # Eğer index.html yoksa, index_template'i kopyala
 if not os.path.exists(index_file_path):
