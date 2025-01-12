@@ -22,19 +22,28 @@ with open(index_file_path, 'r') as file:
     index_content = file.read()
 
 # APK sürümlerini HTML içine eklemek için "versions" bölümünü bul
-versions_section = '<section id="services">\n    <h2>Versions</h2>\n    <div class="cards">\n'
-
-# APK sürümlerini dinamik olarak ekle
-for version, url in apk_versions:
-    version_card = f"""
+versions_section = f"""
+<section id="services">
+    <h2>Versions</h2>
+    <div class="cards">
         <div class="card">
             <h3 class="apk_name">{APP_NAME}</h3>
-            <a href="{url}" class="apk_file">{version}</a>
-        </div>
-    """
-    versions_section += version_card
+            <div class="buttons">
+"""
 
-versions_section += "    </div>\n</section>"
+# APK sürümleri için butonları ekle
+for version, url in apk_versions:
+    versions_section += f"""
+                <a href="{url}" class="apk_file">{version}</a>
+    """
+
+# Kapanış taglarını ekle
+versions_section += """
+            </div>
+        </div>
+    </div>
+</section>
+"""
 
 # "services" bölümünü bulup yerine yeni sürüm kısmını ekle
 index_content = index_content.replace('<section id="services">', versions_section)
