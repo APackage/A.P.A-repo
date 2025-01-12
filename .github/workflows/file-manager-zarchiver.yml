@@ -24,8 +24,8 @@ jobs:
         mkdir -p ${{ env.FOLDER_NAME }}
 
         # Download the APK file
-        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_arm64_v8a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_arm64-v8a_release.apk"
-        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armeabi_v7a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_armeabi-v7a_release.apk"
+        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_arm64-v8a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_arm64-v8a_release.apk"
+        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armeabi-v7a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_armeabi-v7a_release.apk"
         curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armeabi_x86_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_x86_release.apk"
         ls ${{env.FOLDER_NAME}}
         
