@@ -26,7 +26,7 @@ jobs:
         # Download the APK file
         curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_arm64-v8a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_arm64-v8a_release.apk"
         curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armeabi-v7a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_armeabi-v7a_release.apk"
-        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armeabi_x86_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_x86_release.apk"
+        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_x86_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_x86_release.apk"
         ls ${{env.FOLDER_NAME}}
         
 
@@ -65,8 +65,8 @@ jobs:
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
-        asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armebi-v7a_release.apk
-        asset_name: ${{ env.APP_NAME }}_armebi-v7a_release.apk
+        asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armeabi-v7a_release.apk
+        asset_name: ${{ env.APP_NAME }}_armeabi-v7a_release.apk
         asset_content_type: application/vnd.android.package-archive
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
