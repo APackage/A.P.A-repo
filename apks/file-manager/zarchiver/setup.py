@@ -1,7 +1,7 @@
 import os
 import shutil
 
-APP_NAME = os.getenv('APP_NAME')
+APP_NAME = os.getenv('APP_NAME', "APP_NAME")
 
 # Yeni ve mevcut APK sürümleri
 apk_versions = [
@@ -24,7 +24,7 @@ with open(index_file_path, 'r') as file:
 
 # "cards" bölümünü bul
 start_marker = '<div class="cards">'
-end_marker = '</div>\n</section>'
+end_marker = '</div>'
 
 start_idx = index_content.find(start_marker)
 end_idx = index_content.find(end_marker, start_idx)
@@ -54,7 +54,9 @@ else:
     updated_cards = new_version_card + current_cards
 
     # Güncellenmiş içeriği birleştir
-    updated_content = index_content[:start_idx + len(start_marker)] + updated_cards + index_content[end_idx:]
+    updated_content = (
+        index_content[:start_idx + len(start_marker)] + updated_cards + index_content[end_idx:]
+    )
 
     # Değişiklikleri index.html'e yaz
     with open(index_file_path, 'w') as file:
