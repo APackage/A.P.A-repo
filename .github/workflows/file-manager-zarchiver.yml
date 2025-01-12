@@ -137,7 +137,7 @@ jobs:
 
     - name: Run python
       run: |
-        python ${{ FOLDER_NAME }}setup.py
+        python ${{ env.FOLDER_NAME }}setup.py
 
     - name: Commit changes
       run: |
