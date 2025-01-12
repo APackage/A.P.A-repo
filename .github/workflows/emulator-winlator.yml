@@ -62,7 +62,7 @@ jobs:
     - name: Update Release Description with Image
       run: |
         # Update release description with image link
-        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/${{ env.APP_NAME }}/${{ env.APP_NAME }}.jpg"
+        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/${{ env.APP_NAME }}/${{ env.APP_NAME }}.jpeg"
         curl -X PATCH \
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -d "{\"body\": \"${{ env.APP_NAME }} release. ![$IMAGE_URL]($IMAGE_URL)\"}" \
