@@ -142,7 +142,7 @@ jobs:
     - name: Commit changes
       run: |
         git add ${{ env.FOLDER_NAME }}/index.html
-        git commit -m "Update ZArchiver" || echo "No changes to commit"
+        git commit -m "Update ${{ env.APP_NAME }}" || echo "No changes to commit"
 
     - name: Push changes
       env:
