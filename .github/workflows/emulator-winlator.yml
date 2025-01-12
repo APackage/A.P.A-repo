@@ -23,10 +23,15 @@ jobs:
         # Download the APK file
         curl -L -o apks/emulator/winlator/${{ env.APP_NAME }}.apk "https://github.com/brunodev85/winlator/releases/download/v9.0.0/Winlator_9.0.apk"
 
-    - name: Download Image
+    - name: Download Icon
       run: |
         # Download image from the internet
         curl -L -o apks/emulator/winlator/${{ env.APP_NAME }}.jpeg "https://img.utdstc.com/icon/49d/ef9/49def94f7629f13a7d62815cd7c166ebac0613ce57cf497e99179c01a1c2b5c7:200"
+
+    - name: Download Images
+      run: |
+        curl -L -o apks/emulator/winlator/1.jpeg "https://img.utdstc.com/screen/65d/aab/65daabe69713877879f35f931e7b02fb7e45349621e5a0a82fa10bae9dee68ad:300"
+        curl -L -o apks/emulator/winlator/2.jpeg "https://img.utdstc.com/screen/e3a/5ec/e3a5ec868f77c3b4a662364ecbfd7afb64f8e174c50add69d8b332d6510af8e0:300"
 
     - name: Create Release
       id: create_release
@@ -49,7 +54,27 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Upload Image to Release
+    - name: Image 1
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: apks/emulator/winlator/1.jpeg
+        asset_name: 1.jpeg
+        asset_content_type: image/jpeg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+     - name: Image 2
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: apks/emulator/winlator/2.jpeg
+        asset_name: 2.jpeg
+        asset_content_type: image/jpeg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Icon to Release
       uses: actions/upload-release-asset@v1
       with:
         upload_url: ${{ steps.create_release.outputs.upload_url }}
