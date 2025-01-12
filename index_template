@@ -26,9 +26,9 @@
 
     <main>
         <section id="home" class="app">
-            <img class="img_app" src="https://github.com/APackage/A.P.A-repo/releases/download/Winlator_9.0/Winlator_9.0.jpeg">
-            <h1>Winlator</h1>
-            <p>Android application for running Windows applications with Wine and Box86/Box64 </p>
+            <img class="img_app" src="">
+            <h1>App Name</h1>
+            <p></p>
             <a href="#about" class="btn">About</a>
             <a href="#services" class="btn">Download</a>
             <a href="https://github.com/brunodev85/winlator" class="btn">Website</a>
@@ -49,43 +49,13 @@
 
         <section id="about">
             <h2>App Info</h2>
-              <h1>Winlator</h1>
-    <p>Winlator is a free emulator that enables you to run x86 and x64 Windows applications and games on your Android device. By leveraging tools like Wine, Box86, and Box64, it brings the Windows experience to your mobile device.</p>
-
-    <h2>Features</h2>
-    <ul>
-        <li><strong>Broad Application and Game Support:</strong> Play popular PC games such as Fallout 3, Deus Ex: Human Revolution, Mass Effect 2, and The Elder Scrolls IV: Oblivion on your Android device.</li>
-        <li><strong>Customizable Settings:</strong> Personalize various settings, including screen size, graphics driver, DX Wrapper version, and the number of processor cores, to achieve optimal performance on your device.</li>
-        <li><strong>Touch and External Control Support:</strong> Play games using touch controls or connect external devices like a mouse and keyboard for enhanced control.</li>
-    </ul>
-
-    <h2>System Requirements</h2>
-    <ul>
-        <li><strong>Processor:</strong> An Android device with a Qualcomm Snapdragon processor is recommended.</li>
-        <li><strong>RAM:</strong> At least 6 GB of RAM is advised, especially for 3D games.</li>
-        <li><strong>Storage:</strong> Sufficient storage space is necessary; considering the size of PC games, 256 GB of storage is recommended.</li>
-    </ul>
-
-    <h2>Usage</h2>
-    <ol>
-        <li>After launching the app, create a new container and configure settings such as resolution and graphics driver.</li>
-        <li>Copy the Windows application or game files you wish to run into your device's internal storage and launch them through Winlator.</li>
-    </ol>
-
-    <h2>Note</h2>
-    <p>Performance may vary depending on your device's hardware specifications. Devices with more powerful processors and higher RAM capacity will provide a smoother experience.</p>
-
-    <p>With Winlator, you can explore new horizons by experiencing Windows applications and games on your Android device.</p>
-
+              
         </section>
 
         <section id="services">
             <h2>Versions</h2>
             <div class="cards">
-                <div class="card">
-                    <h3 class="apk_name">Version 9.0</h3>
-                    <a href="https://github.com/APackage/A.P.A-repo/releases/download/Winlator_9.0/Winlator_9.0.apk" class="apk_file">Download</a>
-                </div>
+
             </div>
         </section>
     </main>
