@@ -3,6 +3,7 @@ import shutil
 
 APP_NAME = os.getenv('APP_NAME')
 
+# Yeni ve mevcut APK sürümleri
 apk_versions = [
     ("arm64-v8a", f"https://github.com/APackage/A.P.A-repo/releases/download/{APP_NAME}/{APP_NAME}_arm64-v8a_release.apk"),
     ("armeabi-v7a", f"https://github.com/APackage/A.P.A-repo/releases/download/{APP_NAME}/{APP_NAME}_armeabi-v7a_release.apk"),
@@ -17,39 +18,46 @@ index_template_path = os.path.join("index_template")
 if not os.path.exists(index_file_path):
     shutil.copy(index_template_path, index_file_path)
 
-# index.html'i aç ve içeriği düzenle
+# index.html'i aç ve içeriğini oku
 with open(index_file_path, 'r') as file:
     index_content = file.read()
 
-# APK sürümlerini HTML içine eklemek için "versions" bölümünü bul
-versions_section = f"""
-<section id="services">
-    <h2>Versions</h2>
-    <div class="cards">
+# "cards" bölümünü bul
+start_marker = '<div class="cards">'
+end_marker = '</div>\n</section>'
+
+start_idx = index_content.find(start_marker)
+end_idx = index_content.find(end_marker, start_idx)
+
+if start_idx == -1 or end_idx == -1:
+    print("Hata: 'cards' bölümü bulunamadı.")
+else:
+    # Mevcut içerik
+    current_cards = index_content[start_idx + len(start_marker):end_idx].strip()
+
+    # Yeni sürüm kartı oluştur
+    new_version_card = f"""
         <div class="card">
             <h3 class="apk_name">{APP_NAME}</h3>
             <div class="buttons">
-"""
-
-# APK sürümleri için butonları ekle
-for version, url in apk_versions:
-    versions_section += f"""
-                <a href="{url}" class="apk_file">{version}</a>
     """
-
-# Kapanış taglarını ekle
-versions_section += """
+    for version, url in apk_versions:
+        new_version_card += f"""
+                <a href="{url}" class="apk_file">{version}</a>
+        """
+    new_version_card += """
             </div>
         </div>
-    </div>
-</section>
-"""
+    """
 
-# "services" bölümünü bulup yerine yeni sürüm kısmını ekle
-index_content = index_content.replace('<section id="services">', versions_section)
+    # Yeni kartı mevcut içeriğin en üstüne ekle
+    updated_cards = new_version_card + current_cards
 
-# Değiştirilen içeriği tekrar index.html'e yaz
-with open(index_file_path, 'w') as file:
-    file.write(index_content)
+    # Güncellenmiş içeriği birleştir
+    updated_content = index_content[:start_idx + len(start_marker)] + updated_cards + index_content[end_idx:]
 
-print(f"index.html güncellendi: {index_file_path}")
+    # Değişiklikleri index.html'e yaz
+    with open(index_file_path, 'w') as file:
+        file.write(updated_content)
+
+    print(f"Yeni sürüm eklendi: {APP_NAME}")
