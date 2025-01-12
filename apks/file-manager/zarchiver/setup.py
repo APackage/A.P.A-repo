@@ -28,8 +28,8 @@ versions_section = '<section id="services">\n    <h2>Versions</h2>\n    <div cla
 for version, url in apk_versions:
     version_card = f"""
         <div class="card">
-            <h3 class="apk_name">Version {version}</h3>
-            <a href="{url}" class="apk_file">Download</a>
+            <h3 class="apk_name">{APP_NAME}</h3>
+            <a href="{url}" class="apk_file">{version}</a>
         </div>
     """
     versions_section += version_card
