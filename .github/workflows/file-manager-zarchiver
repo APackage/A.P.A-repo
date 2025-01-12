@@ -1,0 +1,120 @@
+name: Zarchiver
+
+on:
+  workflow_dispatch: # Trigger manually only
+
+jobs:
+  apk-download-and-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Clone Repository
+      uses: actions/checkout@v3
+
+    - name: Set app name
+      run: echo "APP_NAME=Zarchiver_1_0_10" >> $GITHUB_ENV
+
+    - name: set folder
+      run: echo "FOLDER_NAME=apks/file-manager/zarchiver/" >> $GITHUB_ENV
+
+
+    - name: Download APK File
+      run: |
+        # Create necessary folders
+        mkdir -p ${{ env.FOLDER_NAME }}
+
+        # Download the APK file
+        curl -L -o ${{ env.FOLDER_NAME }}${{ ${{ env.APP_NAME }}_arm64_v8a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_arm64-v8a_release.apk"
+        curl -L -o ${{ env.FOLDER_NAME }}${{ ${{ env.APP_NAME }}_armeabi_v7a_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAME }}_armeabi-v7a_release.apk"
+        curl -L -o ${{ env.FOLDER_NAME }}${{ ${{ env.APP_NAME }}_armeabi_x86_release.apk "https://zdevs.ru/files/za/${{ env.APP_NAMe }}_x86_release.apk"
+        
+
+    - name: Download Icon
+      run: |
+        # Download image from the internet
+        curl -L -o ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}.jpeg "https://zdevs.ru/img/icon_za.png"
+
+    - name: Download Images
+      run: |
+        curl -L -o ${{ env.FOLDER_NAME }}1.jpeg "https://appimg-dre.dbankcdn.com/application/screenshut1/65/5802243301e54886a67b28e041e2fccc.jpg"
+        curl -L -o ${{ env.FOLDER_NAME }}2.jpeg "https://appimg-dre.dbankcdn.com/application/screenshut4/65/5802243301e54886a67b28e041e2fccc.jpg"
+
+    - name: Create Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: "${{ env.APP_NAME }}" # Adjust if needed
+        release_name: "${{ env.APP_NAME }}"
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Arm64 APK to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_arm64-v8a_release.apk
+        asset_name: ${{ env.APP_NAME }}_arm64-v8a_release.apk
+        asset_content_type: application/vnd.android.package-archive
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+     - name: Upload Armebi APK to Release
+       uses: actions/upload-release-asset@v1
+       with:
+         upload_url: ${{ steps.create_release.outputs.upload_url }}
+         asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_armebi-v7a_release.apk
+         asset_name: ${{ env.APP_NAME }}_armebi-v7a_release.apk
+         asset_content_type: application/vnd.android.package-archive
+       env:
+         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+     - name: Upload X86 APK to Release
+         uses: actions/upload-release-asset@v1
+         with:
+           upload_url: ${{ steps.create_release.outputs.upload_url }}
+           asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}_X86_release.apk
+           asset_name: ${{ env.APP_NAME }}_X86_release.apk
+           asset_content_type: application/vnd.android.package-archive
+         env:
+           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Image 1
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.FOLDER_NAME }}1.jpeg
+        asset_name: 1.jpeg
+        asset_content_type: image/jpeg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Image 2
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.FOLDER_NAME }}2.jpeg
+        asset_name: 2.jpeg
+        asset_content_type: image/jpeg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Icon to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.FOLDER_NAME }}${{ env.APP_NAME }}.jpeg
+        asset_name: ${{ env.APP_NAME }}.jpeg
+        asset_content_type: image/jpeg
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update Release Description with Image
+      run: |
+        # Update release description with image link
+        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/${{ env.APP_NAME }}/${{ env.APP_NAME }}.jpeg"
+        curl -X PATCH \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d "{\"body\": \"${{ env.APP_NAME }} release. ![$IMAGE_URL]($IMAGE_URL)\"}" \
+          https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}
