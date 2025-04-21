@@ -15,7 +15,7 @@ jobs:
         echo "ZIP_NAME=custom_font_installer.zip" >> $GITHUB_ENV
         echo "LOGO_NAME=Magisk_Logo.png" >> $GITHUB_ENV
         echo "TAG_NAME=custom-font-$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
-        echo "FOLDER_NAME=apks/tools/custom_font_installer/" >> $GITHUB_ENV
+        echo "FOLDER_NAME=apks/magisk/custom_font_installer/" >> $GITHUB_ENV
 
     - name: Clone Repository
       run: |
