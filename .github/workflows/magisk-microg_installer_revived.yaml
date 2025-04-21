@@ -1,4 +1,4 @@
-name: Custom Font Installer ZIP
+name: microG Installer Revived
 
 on:
   workflow_dispatch:
@@ -11,6 +11,7 @@ jobs:
     - name: Set Variables
       run: |
         echo "REPO_URL=https://github.com/nift4/microg_installer_revived" >> $GITHUB_ENV
+        echo "APP_NAME=microG Installer Revived" >> $GITHUB_ENV
         echo "CLONE_DIR=microg_installer_revived" >> $GITHUB_ENV
         echo "ZIP_NAME=microg_installer_revived.zip" >> $GITHUB_ENV
         echo "LOGO_NAME=Magisk_Logo.png" >> $GITHUB_ENV
