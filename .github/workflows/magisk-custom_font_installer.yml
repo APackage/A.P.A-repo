@@ -15,6 +15,7 @@ jobs:
         echo "ZIP_NAME=custom_font_installer.zip" >> $GITHUB_ENV
         echo "LOGO_NAME=Magisk_Logo.png" >> $GITHUB_ENV
         echo "TAG_NAME=custom-font-$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+        echo "FOLDER_NAME=apks/tools/custom_font_installer/" >> $GITHUB_ENV
 
     - name: Clone Repository
       run: |
@@ -72,3 +73,19 @@ jobs:
           -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
           -d "{\"body\": \"Custom Font Installer release with Magisk logo. ![]($IMAGE_URL)\"}" \
           https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}
+
+    - name: Run setup.py
+      run: python ${{ env.FOLDER_NAME }}setup.py
+
+    - name: Commit updated index.html
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add ${{ env.FOLDER_NAME }}/index.html
+        git commit -m "Update ${{ env.TAG_NAME }}" || echo "No changes to commit"
+
+    - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
