@@ -27,12 +27,12 @@
     <main>
         <section id="home" class="app">
             <img class="img_app" src="">
-            <h1>App Name</h1>
+            <h1>Custom Font Installer</h1>
             <p></p>
             <a href="#about" class="btn">About</a>
             <a href="#services" class="btn">Download</a>
-            <a href="https://github.com/brunodev85/winlator" class="btn">Website</a>
-            <a href="https://github.com/APackage/A.P.A-repo/blob/main/.github/workflows/emulator-winlator.yml" class="btn">Script Code</a>
+            <a href="https://github.com/nongthaihoang/custom_font_installer" class="btn">Website</a>
+            <a href="https://github.com/APackage/A.P.A-repo/blob/main/.github/workflows/magisk-custom_font_installer.yml" class="btn">Script Code</a>
         </section>
       <!--  
          <ul>
@@ -48,9 +48,87 @@
     
 
         <section id="about">
-            <h2>App Info</h2>
-              
-        </section>
+  <h2>About</h2>
+  <p>CFI is a flash-able zip (based on <a href="https://gitlab.com/nongthaihoang/omftemplate">OMF</a>) that allows installing custom fonts manually via Magisk/TWRP.</p>
+
+  <h3>Usage</h3>
+
+  <h4>Static fonts</h4>
+  <p>Put your fonts in this path <code>Internal storage/OhMyFont/CFI</code>.</p>
+  <p>For <code>sans-serif</code> font family (i.e. Roboto), rename your fonts as below:</p>
+  <pre>
+Black            -> ubl.ttf
+ExtraBold        -> ueb.ttf
+Bold             -> ub.ttf
+SemiBold         -> usb.ttf
+Medium           -> um.ttf
+Regular          -> ur.ttf
+Light            -> ul.ttf
+ExtraLight       -> uel.ttf
+Thin             -> ut.ttf
+
+BlackItalic      -> ibl.ttf
+ExtraBoldItalic  -> ieb.ttf
+BoldItalic       -> ib.ttf
+SemiBoldItalic   -> isb.ttf
+MediumItalic     -> im.ttf
+Italic           -> ir.ttf
+LightItalic      -> il.ttf
+ExtraLightItalic -> iel.ttf
+ThinItalic       -> it.ttf
+
+Condensed-Black            -> cbl.ttf
+Condensed-ExtraBold        -> ceb.ttf
+Condensed-Bold             -> cb.ttf
+Condensed-SemiBold         -> csb.ttf
+Condensed-Medium           -> cm.ttf
+Condensed-Regular          -> cr.ttf
+Condensed-Light            -> cl.ttf
+Condensed-ExtraLight       -> cel.ttf
+Condensed-Thin             -> ct.ttf
+
+Condensed-BlackItalic      -> dbl.ttf
+Condensed-ExtraBoldItalic  -> deb.ttf
+Condensed-BoldItalic       -> db.ttf
+Condensed-SemiBoldItalic   -> dsb.ttf
+Condensed-MediumItalic     -> dm.ttf
+Condensed-Italic           -> dr.ttf
+Condensed-LightItalic      -> dl.ttf
+Condensed-ExtraLightItalic -> del.ttf
+Condensed-ThinItalic       -> dt.ttf
+  </pre>
+  <p>For <code>monospace</code>, rename to <code>mr.ttf</code>.</p>
+  <p>For <code>emoji</code>, rename to <code>e.ttf</code>.</p>
+  <p>For the rest, name your fonts the same as the ones that you want to replace in <code>/system/fonts</code>.</p>
+  <p>Finally, flash the CFI zip and reboot.</p>
+
+  <h4>Variable fonts (VF)</h4>
+  <p>All steps are the same as in static fonts. Except the followings:</p>
+  <ul>
+    <li>For <code>sans-serif</code>, rename VF to <code>ss.ttf</code> (upright) and <code>ssi.ttf</code> (italic).</li>
+    <li>For <code>monospace</code>, rename VF to <code>ms.ttf</code>.</li>
+    <li>Configure axes in the config file <code>OhMyFont/config.cfg</code>.</li>
+  </ul>
+
+  <h4>Note</h4>
+  <ul>
+    <li>You don't need to have all font files listed above, just use what available.</li>
+    <li>For <code>sans-serif</code>, there must be at least one font <code>ur.ttf</code> or <code>ss.ttf</code>.</li>
+    <li>If using VF, flash the CFI zip for the first time to get the default config file.</li>
+    <li>For TWRP support, download the <a href="https://gitlab.com/nongthaihoang/oh_my_font/-/raw/master/extensions/twrp.zip">TWRP</a> extension and extract it to <code>OhMyFont</code> folder.</li>
+    <li>Be aware not every font will work properly on Android.</li>
+  </ul>
+
+  <h3>Google Font Installer</h3>
+  <ul>
+    <li>Download a font from <a href="https://fonts.google.com">Google Fonts</a>.</li>
+    <li>Move the download font zip to <code>Internal storage/OhMyFont/</code></li>
+    <li>Set <code>GF = &lt;font zip name&gt;</code> in the config file <code>OhMyFont/config.cfg</code>.  
+        E.g. The downloaded font zip is <code>Roboto_Condensed.zip</code> then <code>GF = Roboto_Condensed</code>.</li>
+    <li>Only works with static fonts.</li>
+  </ul>
+</section>
+
 
         <section id="services">
             <h2>Versions</h2>
@@ -59,7 +137,7 @@
             <h3 class="apk_name">APP_NAME</h3>
             <div class="buttons">
     
-                <a href="https://github.com/APackage/A.P.A-repo/releases/download/APP_NAME/APP_NAME.zip" class="apk_file">Universal</a>
+                <a href="https://github.com/APackage/A.P.A-repo/releases/download/custom-font-20250421133041/custom_font_installer.zip" class="apk_file">Universal</a>
         
             </div>
         </div>
