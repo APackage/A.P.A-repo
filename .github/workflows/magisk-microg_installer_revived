@@ -1,0 +1,95 @@
+name: Custom Font Installer ZIP
+
+on:
+  workflow_dispatch:
+
+jobs:
+  clone-zip-release:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Set Variables
+      run: |
+        echo "REPO_URL=https://github.com/nift4/microg_installer_revived" >> $GITHUB_ENV
+        echo "CLONE_DIR=microg_installer_revived" >> $GITHUB_ENV
+        echo "ZIP_NAME=microg_installer_revived.zip" >> $GITHUB_ENV
+        echo "LOGO_NAME=Magisk_Logo.png" >> $GITHUB_ENV
+        echo "TAG_NAME=microg_installer_revived-$(date +%Y%m%d%H%M%S)" >> $GITHUB_ENV
+        echo "FOLDER_NAME=apks/magisk/microg_installer_revived/" >> $GITHUB_ENV
+
+    - name: Clone Repository
+      uses: actions/checkout@v3
+
+    - name: Clone Repository
+      run: |
+        git clone --depth 1 ${{ env.REPO_URL }} ${{ env.CLONE_DIR }}
+
+    - name: Remove .git Folder
+      run: |
+        rm -rf ${{ env.CLONE_DIR }}/.git
+
+    - name: Create ZIP File
+      run: |
+        cd ${{ env.CLONE_DIR }}
+        zip -r ../${{ env.ZIP_NAME }} ./*
+        cd ..
+
+    - name: Download Magisk Logo
+      run: |
+        curl -L -o ${{ env.LOGO_NAME }} "https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Magisk_Logo.svg/459px-Magisk_Logo.svg.png"
+
+    - name: Create GitHub Release
+      id: create_release
+      uses: actions/create-release@v1
+      with:
+        tag_name: ${{ env.TAG_NAME }}
+        release_name: 
+          microg_installer_revived - ${{ env.TAG_NAME }}
+        draft: false
+        prerelease: false
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload ZIP to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.ZIP_NAME }}
+        asset_name: ${{ env.ZIP_NAME }}
+        asset_content_type: application/zip
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Upload Magisk Logo to Release
+      uses: actions/upload-release-asset@v1
+      with:
+        upload_url: ${{ steps.create_release.outputs.upload_url }}
+        asset_path: ${{ env.LOGO_NAME }}
+        asset_name: ${{ env.LOGO_NAME }}
+        asset_content_type: image/png
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Update Release Description with Logo
+      run: |
+        IMAGE_URL="https://github.com/${{ github.repository }}/releases/download/${{ env.TAG_NAME }}/${{ env.LOGO_NAME }}"
+        curl -X PATCH \
+          -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
+          -d "{\"body\": \"Custom Font Installer release with Magisk logo. ![]($IMAGE_URL)\"}" \
+          https://api.github.com/repos/${{ github.repository }}/releases/${{ steps.create_release.outputs.id }}
+
+    - name: Run setup.py
+      run: python ${{ env.FOLDER_NAME }}setup.py
+
+    - name: Commit updated index.html
+      run: |
+        git config user.name github-actions
+        git config user.email github-actions@github.com
+        git add ${{ env.FOLDER_NAME }}/index.html
+        git commit -m "Update ${{ env.TAG_NAME }}" || echo "No changes to commit"
+
+    - name: Push changes
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git HEAD:main
