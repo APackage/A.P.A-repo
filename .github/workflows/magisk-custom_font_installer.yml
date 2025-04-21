@@ -18,6 +18,9 @@ jobs:
         echo "FOLDER_NAME=apks/magisk/custom_font_installer/" >> $GITHUB_ENV
 
     - name: Clone Repository
+      uses: actions/checkout@v3
+
+    - name: Clone Repository
       run: |
         git clone --depth 1 ${{ env.REPO_URL }} ${{ env.CLONE_DIR }}
 
